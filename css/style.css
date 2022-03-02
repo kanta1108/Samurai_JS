@@ -17,6 +17,7 @@
             font-weight: bold;
             color: #fff;
             height: 400px;
+            font-size: 1.7rem;
         }
 
         span {
@@ -26,6 +27,10 @@
         .add-color {
             font-size: 0.5em;
             opacity: 0;
+        }
+
+        #text{
+            margin-top: 60px;
         }
 
         .btn{
@@ -38,5 +43,7 @@
             cursor: pointer;
             border: #666 5px solid;
             border-radius: 40px;
-            opacity: 0.8;
+        }
+        .btn:hover{
+            opacity: 0.7;
         }
