@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <p id="count">2</p>
+    <p id="count">60</p>
     <div id="wrap">
         <p id="text"></p>
     </div>
@@ -35,7 +35,7 @@
             'Thank you very much', 'Google Apple Facebook Amazon',
             'ECMAScript', 'console.log', 'for while if switch',
             'var let const', 'Windows Mac Linux iOS Android',
-            'programming','Wap And Peace'
+            'programming', 'Wap And Peace'
         ];
 
         let checkTexts = [];
@@ -69,7 +69,7 @@
         //キー入力判定用のメソッド
         const keyDown = e => {
             if (e.key === checkTexts[0].textContent) {
-                wrap.style.backgroundColor ='#666';
+                wrap.style.backgroundColor = '#666';
                 checkTexts[0].className = "add-color";
 
                 checkTexts.shift();
@@ -78,12 +78,12 @@
                 score++;
 
                 if (!checkTexts.length) createText();
-            //Shiftキーは除外
-            }else if(e.key ==='Shift'){
+                //Shiftキーは除外
+            } else if (e.key === 'Shift') {
                 e.Handled = true;
-            //タイプミスした場合は背景色を赤色に
-            }else{
-                wrap.style.backgroundColor ='red';
+                //タイプミスした場合は背景色を赤色に
+            } else {
+                wrap.style.backgroundColor = 'red';
             }
         };
 
@@ -100,9 +100,9 @@
                 //カウントが0になったらタイマーを停止
                 if (time < 0) gameOver(id);
 
-                if(time <= 10)
+                if (time <= 10)
                     count.style.color = "red";
-                
+
                 //タイマーの表示を1ずつ減らしていく
                 count.textContent = time--;
 
@@ -116,9 +116,9 @@
             //スコアの値をrankCheck()に渡して結果を表示
             const result = confirm(rankCheck(score));
 
-            if(result) window.location.reload();
-            if(!result)window.location.reload();
-        }; 
+            if (result) window.location.reload();
+            if (!result) window.location.reload();
+        };
 
         //スコア表示用のメソッド
         const rankCheck = score => {
@@ -141,19 +141,38 @@
 
         //ゲーム開始の処理
         start.addEventListener("click", () => {
+            //カウントダウン関数
+            countDown();
+
             //タイマー関数
-            timer();
+            //timer();
 
             //ランダムにテキストを表示
-            createText();
+            //createText();
 
             //スタートボタンを非表示に
-            start.style.display = "none";
+            //start.style.display = "none";
 
             //キーボードのイベント処理
-            document.addEventListener("keydown", keyDown);
+            //document.addEventListener("keydown", keyDown);
 
-        })
+        });
+
+
+        //カウントダウンの処理
+        const countDown = () => {
+            let p = document.getElementById('text');
+            
+            p.textContent = 3;
+
+            const intervalId = setInterval(() => {
+
+                p.textContent--;
+
+                if(p.textContent < 2)clearInterval(intervalId);
+
+            },1000)
+        };
 
     </script>
 </body>
