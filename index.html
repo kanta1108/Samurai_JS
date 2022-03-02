@@ -10,7 +10,13 @@
 <body>
     <p id="count">60</p>
     <div id="wrap">
-        <p id="text"></p>
+        <p id="text">
+            ルール<br/><br/>
+            ランダムにテキストが表示されます。正しく文字をタイピングして下さい<br/>
+            制限時間は60秒です。カウントダウンの後始まります<br/>
+            大文字小文字の違い、スペースも判定に含まれます<br/>
+            最後にスコアが表示されます
+        </p>
     </div>
     <div id="start">
         <div class="btn">はじめる</div>
@@ -20,6 +26,8 @@
         // 必要なHTML要素の取得
         const wrap = document.getElementById('wrap');
         const start = document.getElementById('start');
+        const text = document.getElementById('text');
+
 
         // 複数のテキストを格納する配列
         const textLists = [
@@ -141,13 +149,11 @@
 
         //ゲーム開始の処理
         start.addEventListener("click", () => {
-            countDown().then(() => {
-                startGame();
-            });
-        });
+            wrap.style.fontSize ="5rem";
+            text.style.marginTop="80px";
 
-        //カウントダウンの処理
-        const countDown = new Promise((resolve) => {
+            //カウントダウンの処理
+            const countDown = new Promise(resolve => {
                 let p = document.getElementById('text');
 
                 p.textContent = 3;
@@ -156,13 +162,19 @@
 
                     p.textContent--;
 
-                    if (p.textContent < 1){
+                    if (p.textContent < 1) {
                         clearInterval(intervalId);
                         resolve();
                     }
-
                 }, 1000)
             })
+            //カウントダウンの後、ゲームスタート
+            .then(resolve =>{
+                startGame();
+            })
+        });
+
+
 
         //ゲームスタートの処理
         const startGame = () => {
