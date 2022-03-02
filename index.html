@@ -141,14 +141,13 @@
 
         //ゲーム開始の処理
         start.addEventListener("click", () => {
-            //カウントダウン関数
-            /*countDown(resolve).then(() => {
-
+            countDown = new Promise((resolve) =>{
                 startGame();
+            })
+        });
 
-            });*/
-            //カウントダウンの処理
-            const countDown = new Promise((resolve) => {
+        //カウントダウンの処理
+        const countDown = () => {
                 let p = document.getElementById('text');
 
                 p.textContent = 3;
@@ -163,13 +162,7 @@
                     }
 
                 }, 1000)
-
-            }).then(() => {
-                startGame();
-            });
-        });
-
-
+            }
 
         //ゲームスタートの処理
         const startGame = () => {
