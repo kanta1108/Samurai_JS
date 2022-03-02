@@ -4,51 +4,24 @@
 <head>
     <meta charset="utf-8" />
     <title>タイピングアプリ</title>
-    <style>
-        /* ここにCSSを記述する */
-        body {
-            font-size: 6em;
-            text-align: center;
-        }
-
-        #count {
-            margin: 0;
-            font-weight: bold;
-            color: #888;
-        }
-
-        #wrap {
-            margin-top: 20px;
-            padding: 20px 10px;
-            background-color: #666;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        span {
-            transition: all 300ms 0s ease;
-        }
-
-        .add-color {
-            font-size: 0.5em;
-            opacity: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <p id="count">6000</p>
+    <p id="count">2</p>
     <div id="wrap">
         <p id="text"></p>
     </div>
-    <button id="start">スタート</button>
+    <div id="start">
+        <div class="btn">はじめる</div>
+    </div>
 
     <script>
-
         // 必要なHTML要素の取得
         const wrap = document.getElementById('wrap');
         const start = document.getElementById('start');
 
+        // 複数のテキストを格納する配列
         const textLists = [
             'Hello World', 'This is my App', 'How are you?',
             'Today is sunny', 'I love JavaScript!', 'Good morning',
@@ -63,12 +36,12 @@
             'ECMAScript', 'console.log', 'for while if switch',
             'var let const', 'Windows Mac Linux iOS Android',
             'programming','Wap And Peace'
-        ]; // 複数のテキストを格納する配列
+        ];
 
         let checkTexts = [];
-
         let score = 0;
 
+        //タイピング用文字列生成のメソッド
         const createText = () => {
             const p = document.getElementById('text');
             //配列のインデックス数からランダムな数値を生成する
@@ -93,6 +66,7 @@
             })
         };
 
+        //キー入力判定用のメソッド
         const keyDown = e => {
             if (e.key === checkTexts[0].textContent) {
                 wrap.style.backgroundColor ='#666';
@@ -113,6 +87,7 @@
             }
         };
 
+        //タイマーのメソッド
         const timer = () => {
 
             //タイマー要素を取得
@@ -123,14 +98,18 @@
 
             const id = setInterval(() => {
                 //カウントが0になったらタイマーを停止
-                if (time <= 0) gameOver(id);
+                if (time < 0) gameOver(id);
 
+                if(time <= 10)
+                    count.style.color = "red";
+                
                 //タイマーの表示を1ずつ減らしていく
                 count.textContent = time--;
 
             }, 1000);
         };
 
+        //ゲーム終了のメソッド
         const gameOver = id => {
             clearInterval(id);
 
@@ -138,8 +117,10 @@
             const result = confirm(rankCheck(score));
 
             if(result) window.location.reload();
-        }; // ゲームの終了処理
+            if(!result)window.location.reload();
+        }; 
 
+        //スコア表示用のメソッド
         const rankCheck = score => {
             //テキスト用変数
             let text = "";
@@ -158,7 +139,7 @@
             return `${score}文字打てました!\n${text}\n【OK】リトライ/【キャンセル】終了`;
         }
 
-        // createText関数を実行する
+        //ゲーム開始の処理
         start.addEventListener("click", () => {
             //タイマー関数
             timer();
