@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
     <meta charset="utf-8" />
@@ -142,38 +142,49 @@
         //ゲーム開始の処理
         start.addEventListener("click", () => {
             //カウントダウン関数
-            countDown();
+            /*countDown(resolve).then(() => {
 
-            //タイマー関数
-            //timer();
+                startGame();
 
-            //ランダムにテキストを表示
-            //createText();
+            });*/
+            //カウントダウンの処理
+            const countDown = new Promise((resolve) => {
+                let p = document.getElementById('text');
 
-            //スタートボタンを非表示に
-            //start.style.display = "none";
+                p.textContent = 3;
 
-            //キーボードのイベント処理
-            //document.addEventListener("keydown", keyDown);
+                const intervalId = setInterval(() => {
 
+                    p.textContent--;
+
+                    if (p.textContent < 1){
+                        clearInterval(intervalId);
+                        resolve();
+                    }
+
+                }, 1000)
+
+            }).then(() => {
+                startGame();
+            });
         });
 
 
-        //カウントダウンの処理
-        const countDown = () => {
-            let p = document.getElementById('text');
-            
-            p.textContent = 3;
 
-            const intervalId = setInterval(() => {
+        //ゲームスタートの処理
+        const startGame = () => {
+            //タイマー関数
+            timer();
 
-                p.textContent--;
+            //ランダムにテキストを表示
+            createText();
 
-                if(p.textContent < 2)clearInterval(intervalId);
+            //スタートボタンを非表示に
+            start.style.display = "none";
 
-            },1000)
-        };
-
+            //キーボードのイベント処理
+            document.addEventListener("keydown", keyDown);
+        }
     </script>
 </body>
 
