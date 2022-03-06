@@ -147,34 +147,36 @@
             return `${score}文字打てました!\n${text}\n【OK】リトライ/【キャンセル】終了`;
         }
 
+        //カウントダウンの処理
+        const countDown = resolve => {
+            let p = document.getElementById('text');
+
+            p.textContent = 3;
+
+            const intervalId = setInterval(() => {
+
+                p.textContent--;
+
+                if (p.textContent < 1) {
+                    clearInterval(intervalId);
+                    resolve();
+                }
+            }, 1000)
+        }
+        
+        /*
+        //カウントダウンの後、ゲームスタート
+        const countDownStartGame = resolve => {
+            startGame();
+        }
+        */
+
         //ゲーム開始の処理
         start.addEventListener("click", () => {
             wrap.style.fontSize ="5rem";
             text.style.marginTop="80px";
-
-            //カウントダウンの処理
-            const countDown = new Promise(resolve => {
-                let p = document.getElementById('text');
-
-                p.textContent = 3;
-
-                const intervalId = setInterval(() => {
-
-                    p.textContent--;
-
-                    if (p.textContent < 1) {
-                        clearInterval(intervalId);
-                        resolve();
-                    }
-                }, 1000)
-            })
-            //カウントダウンの後、ゲームスタート
-            .then(resolve =>{
-                startGame();
-            })
+            new Promise(countDown).then(startGame);
         });
-
-
 
         //ゲームスタートの処理
         const startGame = () => {
