@@ -1,23 +1,36 @@
 
+        html{
+            height: 100%;
+            width: 100%;
+        }
         body {
             font-size: 6em;
             text-align: center;
             margin: 0;
+            background-image: url("../images/keyboard-g855f02398_1920.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: rgba(0, 0, 0, 0.5);
+            height: 100%;
+            width: 100%;
+            text-shadow: 1px 2px 3px #808080;
         }
 
         #count {
             margin: 0;
             font-weight: bold;
-            color: #888;
+            color: #fff;
+            text-shadow: 1px 2px 3px #808080;
         }
 
         #wrap {
             padding: 20px 10px;
-            background-color: #666;
             font-weight: bold;
             color: #fff;
             height: 400px;
             font-size: 1.7rem;
+            text-shadow: 1px 2px 3px #808080;
         }
 
         span {
@@ -28,22 +41,57 @@
             font-size: 0.5em;
             opacity: 0;
         }
-
-        #text{
-            margin-top: 60px;
+        #text > p {
+            margin-top: 20px;
+        }
+        #start{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            margin-top: 30px;
         }
 
         .btn{
-            display: block;
-            width: 20%;
-            margin: 30px auto;
             font-size: 1.8rem;
             font-weight: bold;
-            color: #666;
+            color: #fff;
             cursor: pointer;
-            border: #666 5px solid;
+            border: #fff 5px solid;
             border-radius: 40px;
+            width: 20%;
         }
         .btn:hover{
-            opacity: 0.7;
+            opacity: 0.8;
+        }
+        #hardness-container{
+            margin-top: 60px;
+        }
+        .hardness{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .radiobutton{
+            display: none;
+        }
+        label{
+            background-color: aqua;
+            padding: 10px 20px;
+        }
+        .radiobutton:checked + label{
+            background-color: violet;
+        }
+        label{
+            box-shadow: 1px 1px 5px #808080;
+            transition: all 300ms 0s ease;
+        }
+        h2{
+            margin: 0;
+            position: relative;
+        }
+        p{
+            margin: 0;
         }

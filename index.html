@@ -10,18 +10,33 @@
 <body>
     <p id="count">60</p>
     <div id="wrap">
-        <p id="text">
-            ルール<br/><br/>
-            ランダムにテキストが表示されます。正しく文字をタイピングして下さい<br/>
-            制限時間は60秒です。カウントダウンの後始まります<br/>
-            大文字小文字の違い、スペースも判定に含まれます<br/>
-            最後にスコアが表示されます
-        </p>
+        <div id="text">
+            <h2>ルール</h2>
+            <p>
+                レベルを選んで下さい<br />
+                ランダムにテキストが表示されます。正しく文字をタイピングして下さい<br />
+                制限時間は60秒です。カウントダウンの後始まります<br />
+                大文字小文字の違い、スペースも判定に含まれます<br />
+                最後にスコアが表示されます
+            </p>
+        </div>
+        <div id="hardness-container">
+            <form class="hardness">
+                <div><input type="radio" name="hardness" class="radiobutton" id="level1" value="easy"><label
+                        for="level1">Level 1</label></div>
+                <div><input type="radio" name="hardness" class="radiobutton" id="level2" value="middle"><label
+                        for="level2">Level 2</label></div>
+                <div><input type="radio" name="hardness" class="radiobutton" id="level3" value="hard"><label
+                        for="level3">Level 3</label></div>
+            </form>
+        </div>
+
     </div>
     <div id="start">
         <div class="btn">はじめる</div>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         // 必要なHTML要素の取得
         const wrap = document.getElementById('wrap');
@@ -30,24 +45,46 @@
 
 
         // 複数のテキストを格納する配列
-        const textLists = [
+        const easyText = [
             'Hello World', 'This is my App', 'How are you?',
             'Today is sunny', 'I love JavaScript!', 'Good morning',
             'I am Japanese', 'Let it be', 'Samurai',
-            'Typing Game', 'Information Technology',
+            'Typing Game','I like coffee','iPhone','silent booth','keyboard',
+            'Queen','Computer Games','Sounds Good','United Kingdom','City Pop',
+            'background','Beatles','Hey Jude','Australia','Belgium','Cambodia',
+            'Colombia','Germany','Mongolia','Netherlands','Portugal','South Africa','Ukraine','Viet Nam','Denmark','Indonesia',
+            'Lebanon','Thriller','Shape Of You','My Favorite Things','Take Five','Chet Baker','','','','','','','','','','','','','','','','','','','','','','','',
+            '','','','','','','','','','','','','','','','','','','',
+        ];
+
+        const middleText = [
+            'Information Technology',
             'I want to be a programmer', 'What day is today?',
             'I want to build a web app', 'Nice to meet you',
-            'Chrome Firefox Edge Safari', 'machine learning',
+             'machine learning',
             'Brendan Eich', 'John Resig', 'React Vue Angular',
             'Netscape Communications', 'undefined null NaN',
             'Thank you very much', 'Google Apple Facebook Amazon',
             'ECMAScript', 'console.log', 'for while if switch',
-            'var let const', 'Windows Mac Linux iOS Android',
-            'programming', 'Wap And Peace'
-        ];
+            'var let const', 'programming','absentminded','apprentice','circumlocution','electrocardiogram',
+            'parapsychology','environmental','Revenge of the Sith','Back to the future','The Devil Wears PRADA','Stand by Me','Hally Potter','Michael Jackson','Stevie Wonder',
+            'singer-songwriter','Smooth Criminal','Tomorrow Never Knows',
+            'Here Comes The Sun','innocent world','Autumn Leaves','Bosnia and Herzegovina','Dominican Republic','Central African Republic','Russian Federation'
+            ,'Republic of Korea'
+        ]
 
+        const hardText = [
+            'anthropomorphism','anthropocentricity','buckminsterfullerene','consciencestricken','counterintelligence',
+            'higgledypiggledy','hypercholesterolemia','immunocompromised','sphygmomanometer','supercalifragilisticexpialidocious','Yellow Magic Orchestra',
+            'I Just Called To Say I Love You','Ob-La-Di Ob-La-Da','Take the A train','We are the world','Democratic Peoples Republic of Korea',
+            'Lao Peoples Democratic Republic','Windows Mac Linux iOS Android',
+            'Chrome Firefox Edge Safari',
+        ]
+
+        //必要な変数を宣言
         let checkTexts = [];
         let score = 0;
+        let textLists = [];
 
         //タイピング用文字列生成のメソッド
         const createText = () => {
@@ -57,6 +94,7 @@
 
             //p要素を空に
             p.textContent = "";
+
 
             //テキストを1文字ずつ分解してp要素に挿入
             checkTexts = textLists[rnd].split("").map(value => {
@@ -77,7 +115,7 @@
         //キー入力判定用のメソッド
         const keyDown = e => {
             if (e.key === checkTexts[0].textContent) {
-                wrap.style.backgroundColor = '#666';
+                $('#wrap').css('color', '#fff');
                 checkTexts[0].className = "add-color";
 
                 checkTexts.shift();
@@ -91,7 +129,7 @@
                 e.Handled = true;
                 //タイプミスした場合は背景色を赤色に
             } else {
-                wrap.style.backgroundColor = 'red';
+                $('#wrap').css('color', 'red');
             }
         };
 
@@ -163,7 +201,7 @@
                 }
             }, 1000)
         }
-        
+
         /*
         //カウントダウンの後、ゲームスタート
         const countDownStartGame = resolve => {
@@ -173,21 +211,42 @@
 
         //ゲーム開始の処理
         start.addEventListener("click", () => {
-            wrap.style.fontSize ="5rem";
-            text.style.marginTop="80px";
-            new Promise(countDown).then(startGame);
+            console.log($('[name = hardness]:checked').val())
+            if ($('[name = hardness]:checked').val() == null) {
+                alert('難易度を選択してください');
+            } else {
+                $('.hardness').css('display', 'none');
+                wrap.style.fontSize = "7rem";
+                text.style.marginTop = "80px";
+                //スタートボタンを非表示に
+                $('#start').css('display', 'none');
+                new Promise(countDown).then(startGame);
+            }
         });
 
         //ゲームスタートの処理
         const startGame = () => {
+            //選択された難易度に応じて表示するリストを変数に格納
+            switch ($('[name = hardness]:checked').val()) {
+                case "easy":
+                    textLists = easyText;
+                    break;
+
+                case "middle":
+                    textLists = middleText;
+                    break;
+
+                case "hard":
+                    textLists = hardText;
+                    break;
+            }
+
+
             //タイマー関数
             timer();
 
             //ランダムにテキストを表示
             createText();
-
-            //スタートボタンを非表示に
-            start.style.display = "none";
 
             //キーボードのイベント処理
             document.addEventListener("keydown", keyDown);
